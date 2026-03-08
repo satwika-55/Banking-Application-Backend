@@ -1,14 +1,15 @@
 const express = require('express');
+const multer = require('multer');
+
 const app = express();
+
 app.use(express.json());
 
-const notes = [];
+const upload = multer({storage: multer.memoryStorage()});
 
-app.post('/notes', (req, res) => {
+app.post('/create-post',  upload.single('image'), async (req,res) => {
     console.log(req.body);
-    notes.push(req.body);
-    res.status(201).send('Note created');
-});
+    console.log(req.file);
+})
 
-
-module.exports = app
+module.exports = app;
